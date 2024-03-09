@@ -8,7 +8,7 @@ function App() {
 
   return (
     <Center>
-      <VStack mt={10} w='1000px' h='650px' alignItems='center' pos="relative"
+      <VStack mt={0.5} w='1200px' h='720px' alignItems='center' pos="relative"
         borderWidth={1} borderColor='blue.500' rounded='md'>
         <Header onToggle={onToggle}/>
         <Library isOpen={isOpen}/>

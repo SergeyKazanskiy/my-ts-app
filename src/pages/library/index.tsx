@@ -35,7 +35,7 @@ export default function ({ isOpen }: IProps) {
     return (
         <Box w="100%" pos="absolute" top="50px">
             <Collapse in={isOpen} animateOpacity>
-                <VStack bg='teal' rounded='md' w='1000px' h='600px' p={2}>
+                <VStack bg='teal' rounded='md' m={1} p={1}>
                     <Heading size='md' justifySelf={'center'}>Hello World</Heading>
                     <HStack w='100%' alignItems='start'>
                         <VStack h='100%'>
