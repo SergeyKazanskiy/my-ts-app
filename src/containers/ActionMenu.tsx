@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import './styles.css';
-import { Menu, MenuButton, MenuList, MenuItem, MenuDivider, IconButton, Box } from "@chakra-ui/react";
+import { Menu, MenuButton, MenuList, MenuItem, IconButton, Box } from "@chakra-ui/react";
 import { FaEllipsisH, FaChevronRight } from 'react-icons/fa';
 
 

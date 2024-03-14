@@ -1,85 +1,35 @@
-import { createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '../../store'
-import { nanoid } from 'nanoid';
-import { moveUp, moveDown } from '../../../hooks/helpers';
 
-interface IBook {
+interface book {
     id: string;
-    categoryId: string;
-    title: string;
-    path: string;
+    shelfId: string;
+    num: number;
+    name: string;
+    type?: string;
 }
 
-interface Inserting {
-    item: IBook;
-    index: number;
-}
+const itemsAdapter = createEntityAdapter<book>({
+    sortComparer: (a, b) => a.num - b.num
+  });
 
-interface IState {
-    items: IBook[];
-    currentId: string;
-    group: string[];
-}
-
-const initialState: IState = {
-    items: [],
-    currentId: "Products",
-    group: []
-}
-
-export const bookSlice = createSlice({
-    name: 'book',
-    initialState,
+const booksSlice = createSlice({
+    name: 'books',
+    initialState: itemsAdapter.getInitialState(),
     reducers: {
-        setCurrent: (state, action: PayloadAction<string>) => {
-            state.currentId = action.payload
-        },
-        addItem: (state, action: PayloadAction<IBook>) => {
-            state.items.concat(action.payload)
-        },
-        insertItem: (state, action: PayloadAction<Inserting>) => {
-            state.items.splice(action.payload.index, 0, action.payload.item)
-        },
-        addToGroup: (state, action: PayloadAction<string>) => {
-            state.group.concat(action.payload)
-        },
-        removeFromGroup: (state, action: PayloadAction<string>) => {
-            state.group.filter((id) => id !== action.payload)
-        },
-        deleteItem: (state, action: PayloadAction<string>) => {
-            state.items.filter((item) => item.id !== action.payload)
-        },
-        clearGroup: (state) => {
-            state.group=[]
-        },
-        removeItem: (state) => {
-            const item = state.items.find((item) => item.id === state.currentId)
-            if (item) {item.path=""}
-        },
-        updateTitle: (state, action: PayloadAction<string>) => {
-            const item = state.items.find((item) => item.id === state.currentId)
-            if (item) {item.title = action.payload}
-        },
-        doubleItem: (state) => {
-            const item = state.items.find((item) => item.id === state.currentId)
-            const index = state.items.findIndex((item) => item.id === state.currentId)
-            if (item) {
-                const _ = require('lodash')
-                const copiedItem: IBook = _.cloneDeep(item)
-                copiedItem.title = item.title + "2"
-                copiedItem.id = nanoid()
-            }
-        },
-        moveItemUp: (state) => {
-            state.items = moveUp(state.items, state.currentId)
-        },
-        moveItemDown: (state) => {
-            state.items = moveDown(state.items, state.currentId)
-        },
+        setItems: itemsAdapter.setAll,
+        clearItems: itemsAdapter.removeAll,
+        addItem: itemsAdapter.addOne,
+        addItems: itemsAdapter.addMany,
+        updateItem: itemsAdapter.updateOne,
+        updateItems: itemsAdapter.updateMany,
+        removeItem: itemsAdapter.removeOne,
+        removeItems: itemsAdapter.removeMany,
     },
-})
+});
 
-export const bookActions = bookSlice.actions
-export const books = (state: RootState) => state.section
-export default bookSlice.reducer
+export const bookReducer = booksSlice.reducer
+export const bookSelectors = itemsAdapter.getSelectors<RootState>((state) => state.books)
+export const bookActions = booksSlice.actions
+
+

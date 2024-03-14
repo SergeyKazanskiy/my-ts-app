@@ -3,10 +3,13 @@ import manualNavsReducer from "./reducers/manual/ManualNavsReducer";
 import manualTabsReducer from "./reducers/manual/ManualTabsReducer";
 import categoryReducer from './reducers/library/CategoryReducer';
 import sectionReducer from './reducers/library/SectionReducer';
-import cabinetReducer from './reducers/library/CabinetReducer';
-import shelfReducer from './reducers/library/ShelfReducer';
+import { cabinetReducer } from './reducers/library/CabinetReducer';
 import menuReducer from './reducers/MenuReducer';
 import toastReducer from './reducers/ToastReducer';
+import  property from './reducers/PropertyReducer';
+import { shelfReducer } from './reducers/library/ShelfReducer';
+import { bookReducer } from './reducers/library/BookReducer';
+
 
 export const store = configureStore({
   reducer: {
@@ -14,10 +17,16 @@ export const store = configureStore({
     manualTabs: manualTabsReducer,
     category: categoryReducer,
     section: sectionReducer,
-    cabinet: cabinetReducer,
+
     shelf: shelfReducer,
+
     menu: menuReducer,
-    toast: toastReducer
+    toast: toastReducer,
+    property,
+    
+    cabinets: cabinetReducer,
+    shelves: shelfReducer,
+    books: bookReducer,
   },
 });
 

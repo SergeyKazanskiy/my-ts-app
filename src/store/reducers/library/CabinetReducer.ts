@@ -1,43 +1,35 @@
-import { createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '../../store'
 
-interface ICabinet {
+interface cabinet {
     id: string;
     sectionId: string;
-    title: string;
+    num: number;
+    name: string;
+    type?: string;
 }
 
-interface IState {
-    items: ICabinet[];
-    currentId: string;
-}
+const itemsAdapter = createEntityAdapter<cabinet>({
+    sortComparer: (a, b) => a.num - b.num
+  });
 
-const initialState: IState = {
-    items: [],
-    currentId: "",
-}
-
-export const cabinetSlice = createSlice({
-    name: 'cabinet',
-    initialState,
+const cabinetsSlice = createSlice({
+    name: 'cabinets',
+    initialState: itemsAdapter.getInitialState(),
     reducers: {
-        setCurrent: (state, action: PayloadAction<string>) => {
-            state.currentId = action.payload
-        },
-        addItem: (state, action: PayloadAction<ICabinet>) => {
-            state.items.concat(action.payload)
-        },
-        removeItem: (state, action: PayloadAction<string>) => {
-            state.items.filter((item) => item.id !== action.payload)
-        },
-        updateTitle: (state, action: PayloadAction<string>) => {
-            const item = state.items.find((item) => item.id === state.currentId)
-            if (item) {item.title = action.payload}
-        },
+        setItems: itemsAdapter.setAll,
+        clearItems: itemsAdapter.removeAll,
+        addItem: itemsAdapter.addOne,
+        addItems: itemsAdapter.addMany,
+        updateItem: itemsAdapter.updateOne,
+        updateItems: itemsAdapter.updateMany,
+        removeItem: itemsAdapter.removeOne,
+        removeItems: itemsAdapter.removeMany,
     },
-})
+});
 
-export const categoryActions = cabinetSlice.actions
-export const cabinets = (state: RootState) => state.cabinet
-export default cabinetSlice.reducer
+export const cabinetReducer = cabinetsSlice.reducer
+export const cabinetSelectors = itemsAdapter.getSelectors<RootState>((state) => state.cabinets)
+export const cabinetActions = cabinetsSlice.actions
+
+

@@ -8,7 +8,7 @@
     --speed: 500ms;
     --menu-item-width: 14rem;
   }
-  
+    /* DropdownMenu */
   .App {
     font-family: sans-serif;
     text-align: center;
@@ -57,3 +57,45 @@
     transition: all var(--speed) ease;
   }
   
+  /* FlipShelf */
+.card {
+  width: 100%;
+  height: 100%;
+  perspective: 1000px;
+}
+
+.card-inner {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s;
+  transform-style: preserve-3d;
+}
+
+.card.is-flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  backface-visibility: hidden;
+}
+
+.card-front {
+  background-color: blue;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-back {
+  background-color: green;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: rotateY(180deg);
+}

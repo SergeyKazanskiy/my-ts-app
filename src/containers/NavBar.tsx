@@ -1,4 +1,6 @@
 import { Button, VStack } from "@chakra-ui/react";
+import { motion, AnimatePresence } from 'framer-motion';
+
 
 export type Item = {
   id: string;
@@ -15,18 +17,28 @@ export type Items = {
 export function NavBar({ items, currentId, clickItem }: Items) {
   return (
     <VStack w="60px">
-      {items.map((item, i) => (
-        <Button
-          key={item.id}
-          size="sm"
-          w="50px"
-          h="50px"
-          variant={item.id === currentId ? "solid" : "outline"}
-          onClick={() => clickItem(i)}
-        >
-          {item.title}
-        </Button>
-      ))}
+      <AnimatePresence>
+        {items.map((item, i) => (
+          <motion.div
+            key={item.id}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            layout
+          >
+            <Button
+              key={item.id}
+              size="sm"
+              w="50px"
+              h="50px"
+              variant={item.id === currentId ? "solid" : "outline"}
+              onClick={() => clickItem(i)}
+            >
+              {item.title}
+            </Button>
+          </motion.div>
+        ))}
+      </AnimatePresence>
     </VStack>
   );
 };

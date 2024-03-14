@@ -41,5 +41,25 @@ export const sectionSlice = createSlice({
 })
 
 export const sectionActions = sectionSlice.actions
-export const sections = (state: RootState) => state.section
+export const sectionSelectors = (state: RootState) => state.section
 export default sectionSlice.reducer
+
+/**
+interface ListItem {
+    id: string;
+    text: string;
+  }
+  
+  const itemsAdapter = createEntityAdapter<ListItem>();
+  
+  const itemsSlice = createSlice({
+    name: 'items',
+    initialState: itemsAdapter.getInitialState(),
+    reducers: {
+      addItem: itemsAdapter.addOne,
+      removeItem: itemsAdapter.removeOne,
+      updateItem: itemsAdapter.updateOne,
+      reorderItems: itemsAdapter.setAll,
+    },
+  });
+   */

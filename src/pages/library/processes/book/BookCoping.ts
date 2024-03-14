@@ -18,14 +18,14 @@ export function BookCoping(event: string, id?: number) {
       switch (state) { // state/copy_states
         case 'Books_Unselected':
           if (event === "BOOK_SELECT") {
-            dispatch(bookActions.setCurrent("id"))
+            //dispatch(bookActions.setCurrent("id"))
             dispatch(menuActions.setBookCommands)
             //dispatch(setState.state1)
           }
           break;
         case 'MenuReady_Copy':
           if (event === "BOOK_SELECT") {
-            dispatch(bookActions.setCurrent(""))
+            //dispatch(bookActions.setCurrent(""))
           };
           if (event === "BUTTON_MENU_CLICKED") {
             dispatch(menuActions.openMenu)
